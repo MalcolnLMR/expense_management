@@ -21,3 +21,10 @@ def getScreen():
     Configs.close()
 
     return (screenX, screenY)
+
+def coll_mouse_rect(mouseButton, rect):
+    mousePos = pg.mouse.get_pos()    
+    if pg.mouse.get_pressed() == mouseButton and rect.collidepoint(mousePos):
+        return True
+    else:
+        return False

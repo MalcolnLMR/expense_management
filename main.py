@@ -16,10 +16,14 @@ while appLoop:
 	Canvas.fill((150, 150, 150))	
 
 	if appState == "main":
-		
+		ui.draw(appState, Canvas)
+		pg.display.update()
+		ui.tick(appState)
+
+
 
 	for event in pg.event.get():
 		if event.type == QUIT:
 			appLoop = False
-	pass
+		pass
 
