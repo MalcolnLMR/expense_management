@@ -20,7 +20,6 @@ IO_Columns = []
 
 class IO_Column:
 	def __init__(self, posX=5, posY=5):
-		global IO_Columns
 		self.x = posX
 		self.y = posY
 		self.rect = pg.Rect(self.x, self.y, 150, 490)
@@ -38,6 +37,7 @@ class IO_Column:
 		pass
 
 	def destroy(self):
+		global IO_Columns
 		IO_Columns.remove(self)
 		del(self)
 
@@ -55,16 +55,26 @@ def draw(appState, canvas):
 			#obj.draw(canvas)
 			pg.draw.rect(canvas, (255, 255, 255), obj.rect)
 
-def tick(appState):
+newClick_generate = True
+newClick_destroy = True
+
+def tick(appState, dt):
 	if appState == "main":
-		if mt.coll_mouse_rect((1,0,0), new_colum_bt):
+		global IO_Columns, newClick_generate, newClick_destroy
+		if mt.coll_mouse_rect((1,0,0), new_colum_bt) and newClick_generate:
 			new = IO_Column(50 * len(IO_Columns) + 10, 5)
 			IO_Columns.append(new)
-			for i in range(1000):
-				i += 1
+			print("novo")
+			newClick_generate = False
+		elif not mt.coll_mouse_rect((1,0,0), new_colum_bt) and not newClick_generate:
+			newClick_generate = True
 
-		if mt.coll_mouse_rect((0,1,0), new_colum_bt):
-			IO_Columns[0].destroy
+		if mt.coll_mouse_rect((0,0,1), new_colum_bt) and newClick_destroy:
+			IO_Columns[0].destroy()
+			print("Destruiu")
+			newClick_destroy = False
+		elif not mt.coll_mouse_rect((0,0,1), new_colum_bt) and not newClick_destroy:
+			newClick_destroy = True
 
 
 

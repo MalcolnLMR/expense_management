@@ -10,15 +10,32 @@ import ui
 appLoop = True
 appState = "main"
 
+######################## Init FPS ########################
+clock = pg.time.Clock()
+FPS = 0
+fpsCounter = 0
+actualFPS = 0
+configFPS = 60
+prevTime = time.time()
+clock.tick(FPS)
+now = time.time()
+dt = now - prevTime
+prevTime = now
+
 Canvas = mt.initPygame()
 
 while appLoop:
-	Canvas.fill((150, 150, 150))	
+	Canvas.fill((150, 150, 150))
+
+	clock.tick(configFPS)
+	now = time.time()
+	dt = now - prevTime
+	prevTime = now	
 
 	if appState == "main":
 		ui.draw(appState, Canvas)
 		pg.display.update()
-		ui.tick(appState)
+		ui.tick(appState, dt)
 
 
 
